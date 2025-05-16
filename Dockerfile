@@ -1,6 +1,7 @@
 # Devemos sempre criar uma imagem a partir de uma imagem base
 # Neste caso, vamos usar a imagem oficial do Node.js
-FROM    node:latest
+ARG NODE_VERSION=20.16.0
+FROM node:${NODE_VERSION}
 
 # Definindo o diretório de trabalho dentro do container
 # Isso significa que todos os comandos seguintes serão executados nesse diretório
