@@ -11,6 +11,8 @@ ENV PORT=3001
 ENV MESSAGE="Hello World from Docker!"
 
 
+RUN apt-get update && apt-get install -y curl && apt-get clean
+
 # Criando um usuário não root para executar o Node.js
 # Isso é uma boa prática de segurança, pois evita que o Node.js seja executado como root
 RUN useradd -m mynode
@@ -23,6 +25,8 @@ WORKDIR     /app
 
 # Copiando o arquivo package.json e package-lock.json para o diretório de trabalho
 COPY . .
+
+HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=3 CMD [ "curl","-f","http://localhost:3001" ] || exit 1
 
 # Executando o comando para inicializar o projeto Node.js
 CMD [ "node", "index.js" ]
