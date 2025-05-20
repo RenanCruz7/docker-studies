@@ -36,5 +36,7 @@ COPY . .
 
 HEALTHCHECK --interval=10s --timeout=5s --start-period=5s --retries=3 CMD [ "curl","-f","http://localhost:3001" ] || exit 1
 
+VOLUME [ "/data" ]
+
 # Executando o comando para inicializar o projeto Node.js
 CMD [ "node", "index.js" ]
