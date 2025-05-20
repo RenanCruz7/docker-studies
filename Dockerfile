@@ -2,7 +2,9 @@
 # Neste caso, vamos usar a imagem oficial do Node.js
 # ARG so funciona no build time, não no runtime
 ARG NODE_VERSION=20.16.0
-FROM node:${NODE_VERSION}
+#FROM node:${NODE_VERSION}
+# A imagem alpine é uma versão menor e mais leve da imagem oficial do Node.js
+FROM node:${NODE_VERSION}-alpine 
 
 # Pode definir varias variáveis de ambiente
 # Essas variáveis podem ser acessadas pelo código Node.js
@@ -10,13 +12,16 @@ FROM node:${NODE_VERSION}
 ENV PORT=3001
 ENV MESSAGE="Hello World from Docker!"
 
+#instalando o curl em um container baseado em debian
+#RUN apt-get update && apt-get install -y curl && apt-get clean
 
-RUN apt-get update && apt-get install -y curl && apt-get clean
+#Caso esteja utilizando o alpine, o curl não vem por padrão
+RUN apk add --no-cache curl
 
 # Criando um usuário não root para executar o Node.js
 # Isso é uma boa prática de segurança, pois evita que o Node.js seja executado como root
-RUN useradd -m mynode
-USER mynode
+#RUN useradd -m mynode
+#USER mynode
 
 # Definindo o diretório de trabalho dentro do container
 # Isso significa que todos os comandos seguintes serão executados nesse diretório
