@@ -18,10 +18,18 @@ RUN apt-get update && apt-get install -y curl && apt-get clean
 RUN useradd -m mynode
 USER mynode
 
-
 # Definindo o diretório de trabalho dentro do container
 # Isso significa que todos os comandos seguintes serão executados nesse diretório
 WORKDIR     /app
+
+# Cache nos layers do docker 
+# Isso significa que o docker só vai baixar as dependências novamente se o package.json mudar
+# Isso é útil para evitar que o docker baixe as dependências toda vez que o código mudar
+# Copiando o arquivo package.json e package-lock.json para o diretório de trabalho
+# Isso é útil para evitar que o docker baixe as dependências toda vez que o código mudar
+COPY package.json ./
+
+RUN npm install 
 
 # Copiando o arquivo package.json e package-lock.json para o diretório de trabalho
 COPY . .
