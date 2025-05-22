@@ -1,4 +1,10 @@
 FROM golang:latest AS builder
+
+LABEL maintainer="Renan Cruz"
+LABEL env="production"
+LABEL description="This is a simple go application"
+
+
 WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' -o server main.go
