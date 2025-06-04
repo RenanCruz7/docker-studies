@@ -7,6 +7,8 @@ services:
     depends_on: # Define as dependências do serviço nodeapp
       mongo:
         condition: service_healthy # Espera o serviço mongo estar saudável 
+    env_file:
+      - ./node/.env # Arquivo de variáveis de ambiente para o node
 
   nginx:
     image: nginx:latest
@@ -16,6 +18,9 @@ services:
       - ./nginx-html:/usr/share/nginx/html
   mongo:
     image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
     healthcheck:
       test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
       interval: 5s
