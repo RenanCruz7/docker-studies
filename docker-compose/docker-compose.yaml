@@ -5,7 +5,8 @@ services:
       context: ./node #caminho para o dockerfile do node
       dockerfile: Dockerfile # Nome do dockerfile do node
     depends_on: # Define as dependências do serviço nodeapp
-      - mongo   
+      mongo:
+        condition: service_healthy # Espera o serviço mongo estar saudável 
 
   nginx:
     image: nginx:latest
@@ -15,3 +16,9 @@ services:
       - ./nginx-html:/usr/share/nginx/html
   mongo:
     image: mongo:latest
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
