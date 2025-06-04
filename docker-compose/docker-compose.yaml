@@ -1,4 +1,8 @@
 services:
+
+  nodeapp:
+    build: ./node
+    
   nginx:
     image: nginx:latest
     ports:
