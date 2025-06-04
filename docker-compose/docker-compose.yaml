@@ -1,8 +1,12 @@
 services:
 
   nodeapp:
-    build: ./node
-    
+    build:
+      context: ./node #caminho para o dockerfile do node
+      dockerfile: Dockerfile # Nome do dockerfile do node
+    depends_on: # Define as dependências do serviço nodeapp
+      - mongo   
+
   nginx:
     image: nginx:latest
     ports:
