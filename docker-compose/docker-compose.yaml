@@ -22,3 +22,8 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10s
+    volumes:
+      - mongo-data:/data/db # Mapeia o volume local para o volume do mongo
+
+volumes:
+  mongo-data: # Define o volume mongo-data
