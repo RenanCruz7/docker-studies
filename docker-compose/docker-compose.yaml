@@ -10,6 +10,19 @@ services:
     env_file:
       - ./node/.env # Arquivo de variáveis de ambiente para o node
 
+  nodeapp-watch:
+    build:
+      context: ./node #caminho para o dockerfile do node
+      dockerfile: Dockerfile # Nome do dockerfile do node
+    depends_on: # Define as dependências do serviço nodeapp
+      mongo:
+        condition: service_healthy # Espera o serviço mongo estar saudável 
+    develop:
+      watch:
+        - path: ./node
+          target: /app
+          action: sync
+
   nginx:
     image: nginx:latest
     ports:
