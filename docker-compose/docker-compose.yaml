@@ -32,3 +32,11 @@ services:
 
 volumes:
   mongo-data: # Define o volume mongo-data
+
+networks:
+  db-net:
+    driver: bridge # Define a rede db-net como uma rede do tipo bridge
+  backend-net:
+    driver: bridge # Define a rede backend-net como uma rede do tipo bridge
+  frontend-net:
+    driver: bridge # Define a rede frontend-net como uma rede do tipo bridge
